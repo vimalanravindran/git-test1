@@ -1,0 +1,23 @@
+gsk8capicmd.exe -keydb -create -db "E:\IBM\IHS855\conf\ssl\key.kdb" -pw WebAS -stash
+
+
+gsk8capicmd.exe -certreq -create -db "E:\IBM\IHS855\conf\ssl\key.kdb" -pw WebAS -size 2048 -label avid-shipdoc -type cms -dn "CN=ukchsbmswpz262.net.bms.com,O=Software Engineering,OU=Bristol-Myers Squibb Co.,ST=New Jersey,L=Pennington,C=US" -file "E:\IBM\IHS855\conf\ssl\certreq.cer"
+
+
+gsk8capicmd.exe -cert -add -db "E:\IBM\IHS855\conf\ssl\key.kdb" -pw WebAS -label BMSROOTCA -format ascii -trust enable -file "E:\IBM\IHS855\conf\ssl\BMSROOTCA.cer"
+gsk8capicmd.exe -cert -add -db "E:\IBM\IHS855\conf\ssl\key.kdb" -pw WebAS -label BMSSUBCA2 -format ascii -trust enable -file "E:\IBM\IHS855\conf\ssl\BMSSUBCA2.cer"
+gsk8capicmd.exe -cert -receive -db "E:\IBM\IHS855\conf\ssl\key.kdb" -pw WebAS -format ascii -default_cert yes -file "E:\IBM\IHS855\conf\ssl\ukchsbmswpz262.cer"
+
+
+
+LoadModule ibm_ssl_module modules/mod_ibm_ssl.so
+<IfModule mod_ibm_ssl.c>
+  Listen 0.0.0.0:443
+  <VirtualHost *:443>
+    SSLEnable
+    Keyfile "E:\IBM\IHS855\conf\ssl\key.kdb"
+  </VirtualHost>
+</IfModule>
+
+LoadModule was_ap22_module E:\IBM\IHS855\modules\mod_was_ap22_http.dll
+WebSpherePluginConfig E:\WebSphere\AppServer85\profiles\Dmgr01\config\cells\plugin-cfg.xml
