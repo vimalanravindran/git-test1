@@ -1,4 +1,3 @@
-gsk8capicmd.exe -keydb -create -db "E:\IBM\IHS855\conf\ssl\key.kdb" -pw WebAS -stash
 
 
 gsk8capicmd.exe -certreq -create -db "E:\IBM\IHS855\conf\ssl\key.kdb" -pw WebAS -size 2048 -label avid-shipdoc -type cms -dn "CN=ukchsbmswpz262.net.bms.com,O=Software Engineering,OU=Bristol-Myers Squibb Co.,ST=New Jersey,L=Pennington,C=US" -file "E:\IBM\IHS855\conf\ssl\certreq.cer"
